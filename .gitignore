@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+*.log
+
+# System files
+.DS_Store
+.CFUserTextEncoding
+
+# Build outputs
+dist/
+build/
+
+# IDE files
+.vscode/
+*.swp
+
+# Environment files
+.env
+.env.local
+
+# Azure files (if not needed in repo)
+.azure/
