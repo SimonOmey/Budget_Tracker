@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
 import { httpResponse } from "../lib/httpResponse.ts";
-import dotenv from "dotenv";
 import axios from "axios";
 import { Transaction } from "../models/transaction.ts";
-import { SpreadsheetController } from "./SpreadSheetController.ts";
+import { SpreadSheetController } from "../controllers/SpreadsheetController.ts";
 
-dotenv.config();
 
 export const WhatsAppWebhookController = {
   getWebHook: async (req: Request, res: Response) => {
@@ -78,7 +76,7 @@ export const WhatsAppWebhookController = {
 
           if (parsed) {
             if (messages.text.body.toLowerCase().startsWith("inkomst")) {
-              await SpreadsheetController.addIncome(parsed);
+              await SpreadSheetController.addIncome(parsed);
               await replyMessage(
                 messages.from,
                 "Inkomst toegevoegd ✅",
@@ -86,7 +84,7 @@ export const WhatsAppWebhookController = {
               );
               return httpResponse(200, "Inkomst toegevoegd", parsed, res);
             } else if (messages.text.body.toLowerCase().startsWith("uitgave")) {
-              await SpreadsheetController.addExpense(parsed);
+              await SpreadSheetController.addExpense(parsed);
               await replyMessage(
                 messages.from,
                 "Uitgave toegevoegd ✅",
@@ -205,18 +203,18 @@ async function generateDailyReport(to: string, messageId?: Number) {
     return d.toDateString() === today.toDateString();
   };
 
-  const inkomsten = await SpreadsheetController.getSheetData("Inkomsten!A:E");
-  const uitgaven = await SpreadsheetController.getSheetData("Uitgaven!A:E");
+  const inkomsten = await SpreadSheetController.getSheetData("Inkomsten!A:E");
+  const uitgaven = await SpreadSheetController.getSheetData("Uitgaven!A:E");
 
-  const inkomstenVandaag = inkomsten.filter((r) => isToday(r[3]));
-  const uitgavenVandaag = uitgaven.filter((r) => isToday(r[3]));
+  const inkomstenVandaag = inkomsten.filter((r: string[]) => isToday(r[3]));
+  const uitgavenVandaag = uitgaven.filter((r: string[]) => isToday(r[3]));
 
   const totaalInkomsten = inkomstenVandaag.reduce(
-    (sum, r) => sum + parseSheetAmount(r[2]),
+    (sum: number, r: string[]) => sum + parseSheetAmount(r[2]),
     0
   );
   const totaalUitgaven = uitgavenVandaag.reduce(
-    (sum, r) => sum + parseSheetAmount(r[2]),
+    (sum: number, r: string[]) => sum + parseSheetAmount(r[2]),
     0
   );
   const saldo = totaalInkomsten - totaalUitgaven;
@@ -228,7 +226,7 @@ async function generateDailyReport(to: string, messageId?: Number) {
 
   if (inkomstenVandaag.length > 0) {
     body += "📈 Inkomsten vandaag:\n";
-    inkomstenVandaag.forEach((r) => {
+    inkomstenVandaag.forEach((r: string[]) => {
       body += `- ${r[0]} (${r[1]}): €${parseSheetAmount(r[2]).toFixed(2)}\n`;
     });
     body += "\n";
@@ -236,12 +234,11 @@ async function generateDailyReport(to: string, messageId?: Number) {
 
   if (uitgavenVandaag.length > 0) {
     body += "📉 Uitgaven vandaag:\n";
-    uitgavenVandaag.forEach((r) => {
+    uitgavenVandaag.forEach((r: string[]) => {
       body += `- ${r[0]} (${r[1]}): €${parseSheetAmount(r[2]).toFixed(2)}\n`;
     });
   }
 
-  // Bericht terugsturen via WhatsApp
   await replyMessage(to, body, messageId || 0);
 }
 

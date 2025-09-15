@@ -20,3 +20,7 @@ build/
 
 # Azure files (if not needed in repo)
 .azure/
+
+# Files
+src/config/credentials.json
+**/credentials.json

@@ -1,15 +1,13 @@
 import { google } from "googleapis";
 import { GoogleAuth } from "google-auth-library";
 import { OAuth2Client } from "google-auth-library";
-import dotenv from "dotenv";
 import fs from "fs/promises";
 import { Transaction } from "../models/transaction.ts";
 import { httpResponse } from "../lib/httpResponse.ts";
 import { Request, Response } from "express";
 
-export const SpreadsheetController = {
+export const SpreadSheetController = {
   initializeSheets: async () => {
-    dotenv.config();
 
     const credentials = await fs.readFile(
       "src/config/credentials.json",
@@ -28,7 +26,7 @@ export const SpreadsheetController = {
   },
 
   addIncome: async (transaction: Transaction) => {
-    const sheets = await SpreadsheetController.initializeSheets();
+    const sheets = await SpreadSheetController.initializeSheets();
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SPREADSHEET_ID,
@@ -52,7 +50,7 @@ export const SpreadsheetController = {
   },
 
   addExpense: async (transaction: Transaction) => {
-    const sheets = await SpreadsheetController.initializeSheets();
+    const sheets = await SpreadSheetController.initializeSheets();
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SPREADSHEET_ID,
@@ -75,28 +73,8 @@ export const SpreadsheetController = {
     return response.data;
   },
 
-  test: async (req: Request, res: Response) => {
-    try {
-      const result = await SpreadsheetController.addIncome({
-        wat: "Loon",
-        categorie: "Werk",
-        bedrag: 120,
-        datum: new Date(),
-        beschrijving: "VancoVienno",
-      });
-      console.log("Inkomst toegevoegd", result.updates?.updatedRange);
-      return httpResponse(
-        200,
-        "Inkomst toegevoegd",
-        result.updates?.updatedRange,
-        res
-      );
-    } catch (err) {
-      console.error("Fout bij toevoegen inkomst:", err);
-    }
-  },
   getSheetData: async (range: string) => {
-    const sheets = await SpreadsheetController.initializeSheets();
+    const sheets = await SpreadSheetController.initializeSheets();
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.SPREADSHEET_ID,
       range,

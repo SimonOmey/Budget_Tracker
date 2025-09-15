@@ -1,12 +1,9 @@
 import express from "express";
-import { SpreadsheetController } from "../controllers/SpreadSheetController.ts";
+import { SpreadSheetController } from "../controllers/SpreadsheetController.ts";
 
 const router = express.Router();
 
-router.post('/addIncome', SpreadsheetController.addIncome)
-router.post('/addExpense', SpreadsheetController.addExpense)
-router.post('/test', SpreadsheetController.test)
-
-
+router.post('/addIncome', SpreadSheetController.addIncome)
+router.post('/addExpense', SpreadSheetController.addExpense)
 
 export default router;
