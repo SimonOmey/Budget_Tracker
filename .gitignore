@@ -24,3 +24,4 @@ build/
 # Files
 src/config/credentials.json
 **/credentials.json
+src/config/credentials.json
