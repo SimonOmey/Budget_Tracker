@@ -10,6 +10,13 @@ Om de WhatsApp berichten te genereren is er ook gebruik gemaakt van **Apple Shor
 
 ## Demo
 
+<div style="text-align: center;">
+  <a href="http://www.youtube.com/watch?v=mlgNMKtR_DI" title="Budget Tracker Demo">
+    <img src="src/public/images/Budget Tracker Logo.png" alt="Budget Tracker Demo Image" width="300">
+  </a>
+</div>
+
+
 Een korte YouTube-demo laat zien hoe berichten van WhatsApp automatisch in de Google Sheet verschijnen, en hoe dagelijkse rapporten worden gegenereerd.
 
 ---
