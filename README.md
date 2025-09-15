@@ -17,7 +17,9 @@ Om de WhatsApp berichten te genereren is er ook gebruik gemaakt van **Apple Shor
 </div>
 
 
-Een korte YouTube-demo laat zien hoe berichten van WhatsApp automatisch in de Google Sheet verschijnen, en hoe dagelijkse rapporten worden gegenereerd.
+Een korte YouTube-demo laat zien hoe ik de berichten genereer adhv van Apple Shortcuts. <br/>
+Deze worden dan doorgestuurd naar een Test Number via het Meta Developer Platform naar de Node server. <br/>
+Via die server worden ze dan in de Google Sheets geplaatst. 
 
 ---
 
